@@ -406,3 +406,349 @@
     background-repeat: repeat-x;
 	animation: footerAnimatedBg 50s linear infinite;
 }
+
+
+/* ========================================
+   NOUVELLES ANIMATIONS - LA CLINIQUE
+   ======================================== */
+
+/* Animation de pulsation continue pour les icônes */
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(232, 131, 26, 0.7);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(232, 131, 26, 0);
+    }
+}
+
+.animate-icon-pulse {
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+/* Animation de flottement */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Animation de rotation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 10s linear infinite;
+}
+
+/* Animation de rebond */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+/* Animation de va-et-vient horizontal */
+@keyframes swing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(5deg);
+    }
+    75% {
+        transform: rotate(-5deg);
+    }
+}
+
+.animate-swing {
+    animation: swing 3s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+/* Animation de fondu en entrée avec déplacement */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Animation de zoom entrada */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-zoom-in {
+    animation: zoomIn 0.6s ease-out forwards;
+}
+
+/* Animation d'apparition avec délai */
+@keyframes fadeInUpDelayed {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease-out;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Effet de zoom sur les images au survol */
+.img-zoom-hover {
+    overflow: hidden;
+}
+
+.img-zoom-hover img {
+    transition: transform 0.5s ease;
+}
+
+.img-zoom-hover:hover img {
+    transform: scale(1.1);
+}
+
+/* Animation de parallaxe subtile */
+.parallax-img {
+    transition: transform 0.3s ease-out;
+}
+
+/* Animation pour les cartes */
+.card-animate {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-animate:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Animation des icônes de service */
+.service-icon {
+    transition: all 0.3s ease;
+}
+
+.service-icon:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Animation du compteur */
+.counter-value {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* Animation de vague pour le SVG */
+@keyframes wave {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-wave {
+    animation: wave 2s ease-in-out infinite;
+}
+
+/* Animation Shine Effect */
+@keyframes shine {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.shine-effect {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+    );
+    background-size: 200% auto;
+    animation: shine 3s linear infinite;
+}
+
+/* Animation de souffle (breathing) */
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+.animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+}
+
+/* Loader animation */
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #E8831A;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: loader 1s linear infinite;
+}
+
+/* Animation des éléments de la liste */
+.list-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+}
+
+.list-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Animation des éléments impairs/pairs */
+.stagger-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.stagger-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stagger-item:nth-child(1) { transition-delay: 0.1s; }
+.stagger-item:nth-child(2) { transition-delay: 0.2s; }
+.stagger-item:nth-child(3) { transition-delay: 0.3s; }
+.stagger-item:nth-child(4) { transition-delay: 0.4s; }
+.stagger-item:nth-child(5) { transition-delay: 0.5s; }
+
+/* Effet de surbrillance au survol des boutons */
+.btn-animated {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.btn-animated::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.btn-animated:hover::before {
+    left: 100%;
+}
+
+/* Animation de l'icône rocket */
+@keyframes rocketFly {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-5px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(5px) rotate(5deg);
+    }
+}
+
+.animate-rocket {
+    animation: rocketFly 3s ease-in-out infinite;
+}
+
+/* Animation de gradient animé */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animated-gradient {
+    background-size: 200% 200%;
+    animation: gradientMove 5s ease infinite;
