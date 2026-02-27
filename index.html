@@ -3,27 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Clinique de l'Entrepreneuriat</title>
-    
+    <title>La Clinique de l'Entrepreneuriat | Former • Innover • Diriger</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome 6 Pro -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="lib/owlcarousel/assets/owl.carousel.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        clinique: {
-                            blue: '#125C5D',
-                            orange: '#E8831A',
-                            light: '#F0F4F4',
-                        }
+                        clinique: { blue: '#125C5D', orange: '#E8831A', light: '#F0F4F4', gold: '#D4AF37', dark: '#0A3D3E' }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -33,531 +26,577 @@
             }
         }
     </script>
-
-    <!-- Libraries Stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
     <style>
-        :root {
-            --clinique-blue: #125C5D;
-            --clinique-orange: #E8831A;
-            --clinique-light: #F0F4F4;
-        }
-        
         .text-clinique-blue { color: #125C5D; }
         .bg-clinique-blue { background-color: #125C5D; }
-        .border-clinique-blue { border-color: #125C5D; }
-        
         .text-clinique-orange { color: #E8831A; }
         .bg-clinique-orange { background-color: #E8831A; }
-        .border-clinique-orange { border-color: #E8831A; }
-        
+        .text-clinique-gold { color: #D4AF37; }
+        .bg-clinique-gold { background-color: #D4AF37; }
         .bg-clinique-light { background-color: #F0F4F4; }
-        
+        .bg-clinique-dark { background-color: #0A3D3E; }
         .font-heading { font-family: 'Montserrat', sans-serif; }
-        .font-sans { font-family: 'Inter', sans-serif; }
         
-        /* Animation de lévitation pour les cartes */
-        .hover-float {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .hover-float:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Style des bullet points */
-        .bullet-list li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .bullet-list li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: #E8831A;
-            font-weight: bold;
-        }
-        
-        /* Animation fade in up */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Bouton avec effet shine */
-        .btn-shine {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-shine::before {
-            content: '';
-            position: absolute;
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, #125C5D, #E8831A);
+            z-index: 100;
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: #E8831A;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            display: none;
+        }
+        @media (min-width: 768px) {
+            #custom-cursor { display: block; }
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
         }
         
-        .btn-shine:hover::before {
-            left: 100%;
-        }
+        .hover-float { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .hover-float:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         
-        /* Section header animation */
-        .section-header {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
+        .card-premium { background: white; border-radius: 24px; overflow: hidden; transition: all 0.4s; }
+        .card-premium:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(18,92,93,0.12); }
         
-        .section-header.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .btn-gradient { background: linear-gradient(135deg, #E8831A, #F59E2D); }
+        .btn-gradient-reverse { background: linear-gradient(135deg, #125C5D, #1A7A7B); }
+        
+        .bullet-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
+        .bullet-list li::before { content: '•'; position: absolute; left: 0; color: #E8831A; font-weight: bold; }
+        
+        .section-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: linear-gradient(90deg, #125C5D, #E8831A); border-radius: 2px; }
+        
+        .footer-gradient { background: linear-gradient(135deg, #125C5D, #0D4546); }
+        
+        .img-hover-zoom { overflow: hidden; }
+        .img-hover-zoom img { transition: transform 0.5s; }
+        .img-hover-zoom:hover img { transform: scale(1.1); }
+        
+        .shape-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 60px; }
+        .shape-fill { fill: #ffffff; }
+        
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #E8831A; transition: width 0.3s; }
+        .nav-link:hover::after { width: 100%; }
+        
+        .stat-number { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #125C5D, #1A7A7B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(18,92,93,0.95) 0%, rgba(10,61,62,0.9) 100%);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #125C5D, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
-<body class="bg-white font-sans text-gray-800 antialiased">
+<body class="bg-white font-sans text-gray-800">
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Scroll Progress & Custom Cursor -->
+    <div id="scroll-progress"></div>
+    <div id="custom-cursor"></div>
+
+    <!-- HEADER -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/95 shadow-md">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-20">
-                
-                <div class="flex-shrink-0 flex items-center gap-3">
-                    <div class="w-12 h-12 bg-clinique-light rounded-full flex items-center justify-center border-2 border-clinique-blue">
-                        <i class="fas fa-rocket text-clinique-blue text-xl"></i>
-                    </div>
-                    <span class="font-heading font-bold text-xl text-clinique-blue leading-tight">
-                        LA CLINIQUE DE <br>L'ENTREPRENEURIAT
-                    </span>
+                <div class="flex items-center gap-3">
+                    <img src="img/LOGO ENTREP 01.png" alt="Logo" class="h-12" onerror="this.src='img/LOGO ENTREP AVEC FOND BLANC 01.png'">
+                    <span class="font-heading font-bold text-clinique-blue">LA CLINIQUE DE <span class="text-clinique-orange">L'ENTREPRENEURIAT</span></span>
                 </div>
-
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#accueil" class="text-clinique-blue font-semibold hover:text-clinique-orange transition duration-300">Accueil</a>
-                    <a href="#apropos" class="text-gray-600 hover:text-clinique-orange transition duration-300">À propos</a>
-                    <a href="#interventions" class="text-gray-600 hover:text-clinique-orange transition duration-300">Domaines</a>
-                    <a href="#programmes" class="text-gray-600 hover:text-clinique-orange transition duration-300">Programmes</a>
-                    <a href="#impact" class="text-gray-600 hover:text-clinique-orange transition duration-300">Impact</a>
-                    <a href="#contact" class="text-gray-600 hover:text-clinique-orange transition duration-300">Contact</a>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#accueil" class="nav-link text-clinique-blue font-semibold">Accueil</a>
+                    <a href="#positionnement" class="nav-link text-gray-600">Positionnement</a>
+                    <a href="#piliers" class="nav-link text-gray-600">Piliers</a>
+                    <a href="#impact" class="nav-link text-gray-600">Impact</a>
+                    <a href="#domaines" class="nav-link text-gray-600">Domaines</a>
+                    <a href="#vision" class="nav-link text-gray-600">Vision</a>
+                    <a href="#contact" class="nav-link text-gray-600">Contact</a>
                 </nav>
-
-                <div class="hidden md:flex items-center">
-                    <a href="#contact" class="bg-clinique-orange text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-orange-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 btn-shine">
-                        Collaborer avec nous
-                    </a>
-                </div>
-
+                <a href="#contact" class="hidden md:inline-block btn-gradient text-white font-bold py-3 px-6 rounded-full">Collaborer</a>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="accueil" class="relative bg-clinique-light overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 lg:pt-32 lg:pb-32">
-            <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
-                
-                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-                    <div class="inline-block py-1 px-3 rounded-full bg-clinique-blue bg-opacity-10 text-clinique-blue font-semibold text-sm mb-6 border border-clinique-blue border-opacity-20 fade-in-up">
-                        Former • Innover • Diriger • Créer des opportunités
-                    </div>
-                    <h1 class="font-heading text-4xl tracking-tight font-extrabold text-clinique-blue sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl fade-in-up" style="transition-delay: 0.1s;">
-                        La Clinique de l'Entrepreneuriat
-                    </h1>
-                    <p class="mt-6 text-lg text-gray-600 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl font-sans fade-in-up" style="transition-delay: 0.2s;">
-                        Un écosystème entrepreneurial dédié à transformer la jeunesse, les entreprises et les institutions en moteurs de développement économique.
-                    </p>
-                    
-                    <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0 flex flex-col sm:flex-row gap-4 fade-in-up" style="transition-delay: 0.3s;">
-                        <a href="#programmes" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-clinique-orange hover:bg-orange-600 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 md:py-4 md:text-lg btn-shine">
-                            Découvrir nos programmes
-                        </a>
-                        <a href="#contact" class="inline-flex items-center justify-center px-8 py-3 border-2 border-clinique-blue text-base font-medium rounded-xl text-clinique-blue hover:bg-clinique-blue hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300 md:py-4 md:text-lg">
-                            Collaborer avec nous
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center lg:justify-end fade-in-up" style="transition-delay: 0.4s;">
-                    <div class="absolute inset-0 bg-clinique-blue rounded-full opacity-10 blur-3xl transform scale-150"></div>
-                    
-                    <div class="relative mx-auto w-full rounded-2xl shadow-2xl lg:max-w-md overflow-hidden border-4 border-white">
-                        <img class="w-full h-80 object-cover" src="img/carousel-1.jpg" alt="La Clinique de l'Entrepreneuriat">
-                    </div>
-                </div>
-
-            </div>
+    <!-- 1. HERO SECTION -->
+    <section id="accueil" class="relative min-h-screen flex items-center hero-gradient">
+        <div class="absolute inset-0 overflow-hidden">
+            <img src="img/clinique 1.jpg" class="w-full h-full object-cover opacity-20">
         </div>
-        
-        <div class="absolute bottom-0 w-full overflow-hidden leading-none">
-            <svg class="relative block w-full h-12 lg:h-20" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,120.25,189.7,105.51,235.27,94.06,279.7,73.4,321.39,56.44Z" fill="#ffffff"></path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="apropos" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-2 gap-12 items-center">
-                <div class="section-header">
-                    <div class="flex items-center mb-6">
-                        <i class="fas fa-lightbulb text-clinique-orange text-3xl mr-3"></i>
-                        <h2 class="font-heading text-3xl font-bold text-clinique-blue">Qui sommes-nous ?</h2>
-                    </div>
-                    <p class="text-gray-600 text-lg mb-8">La Clinique de l'Entrepreneuriat est un écosystème complet qui accompagne jeunes, entreprises et institutions pour transformer les idées en succès concret. Nous combinons formation, innovation et accompagnement stratégique pour créer un impact durable.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="bg-clinique-light rounded-xl p-6 hover-float">
-                            <h4 class="font-heading font-bold text-clinique-blue mb-2">
-                                <i class="fas fa-bullseye text-clinique-orange mr-2"></i>Notre mission
-                            </h4>
-                            <p class="text-gray-600">Former des créateurs d'emplois et de richesses, structurer les entreprises et renforcer les institutions.</p>
-                        </div>
-                        
-                        <div class="bg-clinique-light rounded-xl p-6 hover-float">
-                            <h4 class="font-heading font-bold text-clinique-blue mb-2">
-                                <i class="fas fa-eye text-clinique-orange mr-2"></i>Notre vision
-                            </h4>
-                            <p class="text-gray-600">Construire un écosystème entrepreneurial national et africain capable de transformer la jeunesse congolaise en moteur du développement économique.</p>
-                        </div>
-                        
-                        <div class="bg-clinique-light rounded-xl p-6 hover-float">
-                            <h4 class="font-heading font-bold text-clinique-blue mb-2">
-                                <i class="fas fa-history text-clinique-orange mr-2"></i>Notre histoire
-                            </h4>
-                            <p class="text-gray-600">Face au chômage des jeunes et à la mentalité "emploi avant création", La Clinique est née pour encourager la culture entrepreneuriale et la création d'opportunités.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-12 lg:mt-0">
-                    <img src="img/about.png" alt="À propos" class="rounded-2xl shadow-2xl w-full">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interventions Section -->
-    <section id="interventions" class="py-20 bg-clinique-light">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-header">
-                <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-rocket text-clinique-orange text-3xl mr-3"></i>
-                    <h2 class="font-heading text-3xl font-bold text-clinique-blue">Nos domaines d'intervention</h2>
-                </div>
-            </div>
-            
-            <div class="space-y-8 max-w-4xl mx-auto">
-                <!-- Item 1 -->
-                <div class="bg-white rounded-2xl shadow-lg p-8 hover-float section-header">
-                    <h3 class="font-heading text-2xl font-bold text-clinique-blue mb-2">1. Entrepreneuriat à l'École</h3>
-                    <p class="text-gray-600">Éveiller l'esprit entrepreneurial dès le plus jeune âge à travers conférences et ateliers.</p>
-                </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg p-8 hover-float section-header">
-                    <h3 class="font-heading text-2xl font-bold text-clinique-blue mb-3">2. Formation des jeunes entrepreneurs</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Création et structuration de projets innovants</li>
-                        <li>Leadership et innovation</li>
-                    </ul>
-                </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg p-8 hover-float section-header">
-                    <h3 class="font-heading text-2xl font-bold text-clinique-blue mb-3">3. Accompagnement des PME</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Renforcement des équipes</li>
-                        <li>Développement commercial et stratégie de croissance</li>
-                        <li>Fidélisation client</li>
-                    </ul>
-                </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg p-8 hover-float section-header">
-                    <h3 class="font-heading text-2xl font-bold text-clinique-blue mb-3">4. Conseil aux grandes entreprises</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Recrutement stratégique</li>
-                        <li>Évaluation et formation des équipes</li>
-                        <li>Culture de performance</li>
-                    </ul>
-                </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg p-8 hover-float section-header">
-                    <h3 class="font-heading text-2xl font-bold text-clinique-blue mb-3">5. Performance des institutions publiques</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Renforcement des capacités</li>
-                        <li>Leadership administratif</li>
-                        <li>Culture de résultats</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact Section -->
-    <section id="impact" class="py-20 bg-clinique-blue text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-header">
-                <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-chart-bar text-clinique-orange text-3xl mr-3"></i>
-                    <h2 class="font-heading text-3xl font-bold">Notre impact</h2>
-                </div>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white/10 backdrop-blur rounded-2xl p-8 text-center hover-float section-header">
-                    <p class="text-xl mb-2">Plus de <span class="text-4xl font-bold text-clinique-orange">50</span> élèves</p>
-                    <p class="text-white/80">déjà initiés à l'entrepreneuriat</p>
-                </div>
-                
-                <div class="bg-white/10 backdrop-blur rounded-2xl p-8 text-center hover-float section-header">
-                    <p class="text-xl mb-2">Plusieurs <span class="text-4xl font-bold text-clinique-orange">PME</span></p>
-                    <p class="text-white/80">et institutions accompagnées dans leur croissance</p>
-                </div>
-                
-                <div class="bg-white/10 backdrop-blur rounded-2xl p-8 text-center hover-float section-header">
-                    <p class="text-xl mb-2"><span class="text-4xl font-bold text-clinique-orange">Des jeunes</span></p>
-                    <p class="text-white/80">formés capables de créer et gérer leur propre entreprise</p>
-                </div>
-            </div>
-            
-            <div class="mt-16 text-center section-header">
-                <blockquote class="text-2xl font-heading italic">
-                    "Nous ne formons pas seulement des entrepreneurs.<br>Nous formons les bâtisseurs de l'économie de demain."
+        <div class="relative z-10 max-w-7xl mx-auto px-4 py-32 w-full">
+            <div class="text-center text-white">
+                <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 animate__animated animate__fadeInUp">
+                    La Clinique de l'Entrepreneuriat
+                </h1>
+                <p class="text-xl md:text-2xl font-semibold mb-4 text-clinique-gold animate__animated animate__fadeInUp animate__delay-1s">
+                    Former. Structurer. Accélérer. Transformer durablement.
+                </p>
+                <p class="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-8 animate__animated animate__fadeInUp animate__delay-2s">
+                    Un écosystème stratégique dédié à la transformation de la jeunesse, des entreprises et des institutions en véritables moteurs de développement économique en République Démocratique du Congo et en Afrique.
+                </p>
+                <blockquote class="text-xl italic text-white/80 mb-10 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__delay-3s border-l-4 border-clinique-gold pl-6">
+                    Nous ne transmettons pas seulement des compétences.<br>
+                    <span class="font-bold text-clinique-gold">Nous développons des leaders capables de créer de la valeur, des emplois et des solutions durables.</span>
                 </blockquote>
-            </div>
-        </div>
-    </section>
-
-    <!-- Programs Section -->
-    <section id="programmes" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-header">
-                <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-graduation-cap text-clinique-orange text-3xl mr-3"></i>
-                    <h2 class="font-heading text-3xl font-bold text-clinique-blue">Nos programmes</h2>
-                </div>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Entrepreneuriat à l'École</h3>
-                    <p class="text-gray-600">Conférences et ateliers pour développer l'esprit entrepreneurial chez les jeunes.</p>
-                </div>
-                
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Formation des Entrepreneurs</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Création de projet</li>
-                        <li>Structuration d'entreprise</li>
-                        <li>Leadership</li>
-                        <li>Innovation</li>
-                    </ul>
-                </div>
-                
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Accompagnement des PME</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Formation des équipes</li>
-                        <li>Développement commercial</li>
-                        <li>Stratégie de croissance</li>
-                        <li>Fidélisation client</li>
-                    </ul>
-                </div>
-                
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Conseil aux Grandes Entreprises</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Recrutement stratégique</li>
-                        <li>Évaluation des équipes</li>
-                        <li>Formation continue</li>
-                        <li>Culture de performance</li>
-                    </ul>
-                </div>
-                
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Institutions Publiques</h3>
-                    <ul class="bullet-list text-gray-600">
-                        <li>Renforcement des capacités</li>
-                        <li>Performance organisationnelle</li>
-                        <li>Leadership administratif</li>
-                        <li>Culture de résultats</li>
-                    </ul>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center animate__animated animate__fadeInUp animate__delay-4s">
+                    <a href="#programmes" class="btn-gradient text-white font-bold py-4 px-8 rounded-full inline-block text-lg">Découvrir nos programmes</a>
+                    <a href="#contact" class="bg-white text-clinique-blue font-bold py-4 px-8 rounded-full inline-block text-lg hover:bg-clinique-light transition">Devenir partenaire</a>
                 </div>
             </div>
         </div>
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,120.25,189.7,105.51,235.27,94.06,279.7,73.4,321.39,56.44Z" class="shape-fill"></path></svg>
+        </div>
     </section>
 
-    <!-- University Vision Section -->
-    <section class="py-20 bg-clinique-light">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-2 gap-12 items-center">
+    <!-- 2. SECTION POSITIONNEMENT -->
+    <section id="positionnement" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img src="img/clinique 2.jpg" class="rounded-2xl shadow-xl img-hover-zoom">
+                        <img src="img/clinique 4.jpg" class="rounded-2xl shadow-xl img-hover-zoom">
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <img src="img/clinique 5.jpg" class="rounded-2xl shadow-xl img-hover-zoom">
+                        <img src="img/clinique 6.jpg" class="rounded-2xl shadow-xl img-hover-zoom">
+                    </div>
+                </div>
                 <div>
-                    <img src="img/team-5.jpg" alt="Université de l'Entrepreneuriat" class="rounded-2xl shadow-2xl w-full">
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue mb-6">
+                        Répondre aux défis économiques par l'action structurée.
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-6">
+                        Le chômage des jeunes, la fragilité organisationnelle des PME et l'absence de culture entrepreneuriale solide constituent des freins majeurs au développement économique.
+                    </p>
+                    <p class="text-gray-600 text-lg mb-6">
+                        <strong>La Clinique de l'Entrepreneuriat</strong> est née d'une conviction forte :
+                    </p>
+                    <blockquote class="text-xl italic text-clinique-blue border-l-4 border-clinique-orange pl-6 mb-6">
+                        Le développement ne viendra pas uniquement des ressources naturelles, mais de la structuration des talents, des entreprises et des institutions.
+                    </blockquote>
+                    <p class="text-gray-600 text-lg">
+                        Nous intervenons à tous les niveaux de l'écosystème pour bâtir des structures performantes, innovantes et durables.
+                    </p>
                 </div>
-                <div class="section-header">
-                    <div class="inline-block py-1 px-3 rounded-full bg-clinique-orange bg-opacity-20 text-clinique-orange font-semibold text-sm mb-6">
-                        <i class="fas fa-star mr-2"></i>
-                        Vision à Long Terme
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SECTION NOS PILIERS STRATÉGIQUES -->
+    <section id="piliers" class="py-24 bg-clinique-light">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue section-title inline-block relative">Nos Piliers Stratégiques</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card-premium bg-white p-8 hover-float text-center">
+                    <div class="w-20 h-20 bg-clinique-blue text-white rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6">
+                        <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <h2 class="font-heading text-3xl font-bold text-clinique-blue mb-6">Université de l'Entrepreneuriat</h2>
-                    <p class="text-gray-600 text-lg mb-8">Notre ambition : créer l'Université de l'Entrepreneuriat du Congo, où les étudiants pourront apprendre à créer et gérer des entreprises dès le Bac.</p>
-                    
-                    <div class="bg-clinique-blue rounded-2xl p-8 text-white">
-                        <h3 class="font-heading text-2xl font-bold mb-2">
-                            <i class="fas fa-globe-africa mr-2"></i>Vision 2035 / 2040
-                        </h3>
-                        <p class="text-white/80 text-lg">Former les futurs leaders économiques du pays et de l'Afrique.</p>
+                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Formation</h3>
+                    <p class="text-gray-600">
+                        Programmes pratiques, structurés et orientés résultats pour développer une culture entrepreneuriale solide et durable.
+                    </p>
+                </div>
+                <div class="card-premium bg-white p-8 hover-float text-center">
+                    <div class="w-20 h-20 bg-clinique-orange text-white rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Accompagnement</h3>
+                    <p class="text-gray-600">
+                        Suivi stratégique personnalisé pour transformer les idées en entreprises viables et en organisations performantes.
+                    </p>
+                </div>
+                <div class="card-premium bg-white p-8 hover-float text-center">
+                    <div class="w-20 h-20 bg-clinique-dark text-white rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6">
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Structuration Institutionnelle</h3>
+                    <p class="text-gray-600">
+                        Renforcement des capacités organisationnelles, leadership administratif et culture de performance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECTION IMPACT -->
+    <section id="impact" class="py-24 bg-clinique-blue text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold section-title inline-block relative">Notre Impact</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div class="text-center bg-white/10 backdrop-blur rounded-3xl p-8 hover-float">
+                    <div class="stat-number mb-2" data-target="50">0</div>
+                    <p class="text-xl">Élèves initiés à l'esprit entrepreneurial</p>
+                </div>
+                <div class="text-center bg-white/10 backdrop-blur rounded-3xl p-8 hover-float">
+                    <div class="stat-number mb-2" data-target="50">0</div>
+                    <p class="text-xl">PME accompagnées vers une structuration durable</p>
+                </div>
+                <div class="text-center bg-white/10 backdrop-blur rounded-3xl p-8 hover-float">
+                    <div class="stat-number mb-2" data-target="20">0</div>
+                    <p class="text-xl">Institutions renforcées dans leur organisation</p>
+                </div>
+                <div class="text-center bg-white/10 backdrop-blur rounded-3xl p-8 hover-float">
+                    <div class="stat-number mb-2" data-target="500">0</div>
+                    <p class="text-xl">Jeunes formés à créer et gérer leurs propres entreprises</p>
+                </div>
+            </div>
+        </div>
+        <div class="shape-divider">
+            <svg viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V95.8C59.71,118.08,130.83,120.25,189.7,105.51,235.27,94.06,279.7,73.4,321.39,56.44Z" fill="#ffffff"></path></svg>
+        </div>
+    </section>
+
+    <!-- 5. SECTION DOMAINES D'INTERVENTION -->
+    <section id="domaines" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue section-title inline-block relative">Nos Domaines d'Intervention</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Un écosystème complet pour répondre à tous les besoins de développement entrepreneurial.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card-premium bg-clinique-light p-8 hover-float">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 bg-clinique-blue text-white rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-clinique-blue mb-3">1. Entrepreneuriat à l'École</h3>
+                            <p class="text-gray-600">Sensibilisation et formation des élèves pour développer créativité, autonomie et capacité d'initiative dès le plus jeune âge.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-premium bg-clinique-light p-8 hover-float">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 bg-clinique-orange text-white rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-clinique-blue mb-3">2. Formation des Jeunes Entrepreneurs</h3>
+                            <ul class="bullet-list text-gray-600">
+                                <li>Création et structuration de projets</li>
+                                <li>Modélisation économique</li>
+                                <li>Leadership et innovation</li>
+                                <li>Gestion stratégique</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-premium bg-clinique-light p-8 hover-float">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 bg-green-500 text-white rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-clinique-blue mb-3">3. Accompagnement des PME</h3>
+                            <ul class="bullet-list text-gray-600">
+                                <li>Optimisation organisationnelle</li>
+                                <li>Développement commercial</li>
+                                <li>Stratégies de croissance</li>
+                                <li>Culture client</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-premium bg-clinique-light p-8 hover-float">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 bg-purple-500 text-white rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-clinique-blue mb-3">4. Conseil aux Grandes Entreprises</h3>
+                            <ul class="bullet-list text-gray-600">
+                                <li>Recrutement stratégique</li>
+                                <li>Évaluation des performances</li>
+                                <li>Formation continue</li>
+                                <li>Développement de la culture d'excellence</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-premium bg-clinique-light p-8 hover-float">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 bg-red-500 text-white rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-clinique-blue mb-3">5. Institutions Publiques</h3>
+                            <ul class="bullet-list text-gray-600">
+                                <li>Renforcement des capacités</li>
+                                <li>Leadership administratif</li>
+                                <li>Culture de résultats</li>
+                                <li>Modernisation organisationnelle</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-header">
-                <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-newspaper text-clinique-orange text-3xl mr-3"></i>
-                    <h2 class="font-heading text-3xl font-bold text-clinique-blue">Blog & Ressources</h2>
+    <!-- 6. SECTION DIFFÉRENCIATION -->
+    <section class="py-24 bg-clinique-light">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue mb-6">Pourquoi La Clinique ?</h2>
+                    <p class="text-gray-600 text-lg mb-8">Notre approche combine :</p>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-clinique-blue text-white rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chess-knight"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-bold text-clinique-blue">Vision stratégique</h4>
+                                <p class="text-gray-600">Une approche globale et前瞻ante du développement entrepreneurial.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-clinique-orange text-white rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-list-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-bold text-clinique-blue">Méthodologie structurée</h4>
+                                <p class="text-gray-600">Des processus éprouvés pour des résultats mesurables.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-green-500 text-white rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-bold text-clinique-blue">Mesure des résultats</h4>
+                                <p class="text-gray-600">Un suivi rigoureux pour garantir l'impact de chaque intervention.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-clinique-dark text-white rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-bold text-clinique-blue">Engagement sur le long terme</h4>
+                                <p class="text-gray-600">Un partenariat durable pour accompagner votre croissance.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <blockquote class="text-xl italic text-clinique-blue border-l-4 border-clinique-gold pl-6 mt-8">
+                        Nous ne livrons pas des formations ponctuelles.<br>
+                        <span class="font-bold">Nous construisons des trajectoires durables.</span>
+                    </blockquote>
                 </div>
-                <p class="text-gray-600 mt-4 text-lg">Découvrez nos articles et analyses sur :</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Le chômage des jeunes</h3>
-                    <p class="text-gray-600 mb-4">Analyses et solutions pour lutter contre le chômage des jeunes en Afrique.</p>
-                </div>
-                
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">La mentalité entrepreneuriale</h3>
-                    <p class="text-gray-600 mb-4">Comment développer l'esprit d'entreprise et changer les mentalités.</p>
-                </div>
-                
-                <div class="bg-clinique-light rounded-2xl p-8 hover-float section-header">
-                    <h3 class="font-heading text-xl font-bold text-clinique-blue mb-4">Leadership et innovation</h3>
-                    <p class="text-gray-600 mb-4">Les clés du leadership moderne et de l'innovation en entreprise.</p>
+                <div class="hidden lg:block">
+                    <img src="img/clinique 3.jpg" class="rounded-3xl shadow-2xl img-hover-zoom">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Partners Section -->
-    <section class="py-20 bg-clinique-light">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-header">
-                <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-handshake text-clinique-orange text-3xl mr-3"></i>
-                    <h2 class="font-heading text-3xl font-bold text-clinique-blue">Partenaires</h2>
+    <!-- 7. SECTION VISION LONG TERME -->
+    <section id="vision" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="hidden lg:block order-2">
+                    <img src="img/clinique 6.jpg" class="rounded-3xl shadow-2xl img-hover-zoom">
                 </div>
-                <p class="text-gray-600 mt-4 text-lg">Nous collaborons avec :</p>
+                <div class="order-1">
+                    <div class="inline-block bg-clinique-gold/20 text-clinique-gold py-2 px-4 rounded-full text-sm font-semibold mb-4">
+                        Vision 2035-2040
+                    </div>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue mb-6">
+                        Université de l'Entrepreneuriat
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-6">
+                        Notre ambition est de créer <strong>l'Université de l'Entrepreneuriat du Congo</strong> : un établissement dédié à la formation de leaders économiques, capables de créer des entreprises innovantes et performantes dès le Bac.
+                    </p>
+                    <div class="bg-clinique-light rounded-2xl p-6">
+                        <h4 class="font-heading font-bold text-clinique-blue mb-2">
+                            <i class="fas fa-bullseye text-clinique-orange mr-2"></i>Notre Vision
+                        </h4>
+                        <p class="text-gray-600">
+                            Former une génération de bâtisseurs économiques pour le Congo et l'Afrique.
+                        </p>
+                    </div>
+                </div>
             </div>
-            
+        </div>
+    </section>
+
+    <!-- 8. SECTION BLOG & RÉFLEXION -->
+    <section class="py-24 bg-clinique-light">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue section-title inline-block relative">Nos Réflexions</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Analyses stratégiques sur les enjeux économiques africains.</p>
+            </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 hover-float section-header">
+                <div class="card-premium overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="img/clinique 1.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-xl font-bold text-clinique-blue mb-2">Le chômage des jeunes</h3>
+                        <p class="text-gray-600 mb-4">Analyses et solutions pour l'Afrique.</p>
+                        <a href="#" class="text-clinique-orange font-semibold">Lire la suite →</a>
+                    </div>
+                </div>
+                <div class="card-premium overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="img/clinique 2.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-xl font-bold text-clinique-blue mb-2">La transformation économique</h3>
+                        <p class="text-gray-600 mb-4">Comment développer l'esprit d'entreprise.</p>
+                        <a href="#" class="text-clinique-orange font-semibold">Lire la suite →</a>
+                    </div>
+                </div>
+                <div class="card-premium overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="img/clinique 3.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-xl font-bold text-clinique-blue mb-2">Leadership & Innovation</h3>
+                        <p class="text-gray-600 mb-4">Les clés du succès en entreprise.</p>
+                        <a href="#" class="text-clinique-orange font-semibold">Lire la suite →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. SECTION PARTENAIRES -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue section-title inline-block relative">Ils collaborent avec nous</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-3xl p-8 text-center hover-float border-2 border-gray-100">
+                    <div class="w-20 h-20 bg-clinique-blue/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-school text-clinique-blue text-4xl"></i>
+                    </div>
                     <h3 class="font-heading text-xl font-bold text-clinique-blue">Écoles et universités</h3>
                 </div>
-                
-                <div class="bg-white rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 hover-float section-header">
+                <div class="bg-white rounded-3xl p-8 text-center hover-float border-2 border-gray-100">
+                    <div class="w-20 h-20 bg-clinique-orange/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-rocket text-clinique-orange text-4xl"></i>
+                    </div>
                     <h3 class="font-heading text-xl font-bold text-clinique-blue">Entreprises innovantes</h3>
                 </div>
-                
-                <div class="bg-white rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 hover-float section-header">
+                <div class="bg-white rounded-3xl p-8 text-center hover-float border-2 border-gray-100">
+                    <div class="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-landmark text-green-600 text-4xl"></i>
+                    </div>
                     <h3 class="font-heading text-xl font-bold text-clinique-blue">Institutions et ministères</h3>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-header">
-                <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-envelope text-clinique-orange text-3xl mr-3"></i>
-                    <h2 class="font-heading text-3xl font-bold text-clinique-blue">Contactez-nous</h2>
-                </div>
+    <!-- 10. SECTION APPEL À L'ACTION FINAL -->
+    <section class="py-24 bg-clinique-blue text-white">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-6">Bâtissons ensemble l'économie de demain.</h2>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto mb-10">
+                Que vous soyez une école, une PME, une grande entreprise ou une institution publique, La Clinique de l'Entrepreneuriat est prête à collaborer pour transformer vos ambitions en résultats mesurables.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contact" class="btn-gradient text-white font-bold py-4 px-8 rounded-full inline-block text-lg">Prendre rendez-vous</a>
+                <a href="#contact" class="bg-white text-clinique-blue font-bold py-4 px-8 rounded-full inline-block text-lg hover:bg-clinique-light transition">Devenir partenaire</a>
             </div>
-            
-            <div class="lg:grid lg:grid-cols-2 gap-12">
-                <div class="bg-clinique-light rounded-2xl p-8 lg:p-12 section-header">
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-clinique-blue section-title inline-block relative">Contactez-nous</h2>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="bg-clinique-light rounded-3xl p-8">
                     <h3 class="font-heading text-2xl font-bold text-clinique-blue mb-8">Envoyez-nous un message</h3>
                     <form class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nom</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue focus:outline-none transition-colors" placeholder="Votre nom">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" placeholder="Nom" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue outline-none">
+                            <input type="text" placeholder="Organisation" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue outline-none">
                         </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Organisation</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue focus:outline-none transition-colors" placeholder="Votre organisation">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                            <input type="email" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue focus:outline-none transition-colors" placeholder="Votre email">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
-                            <textarea rows="4" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue focus:outline-none transition-colors" placeholder="Votre message"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-clinique-orange text-white font-semibold py-4 px-8 rounded-xl hover:bg-orange-600 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 btn-shine">
-                            Envoyer
-                        </button>
+                        <input type="email" placeholder="Email" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue outline-none">
+                        <textarea rows="5" placeholder="Message" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-clinique-blue outline-none"></textarea>
+                        <button type="submit" class="w-full btn-gradient text-white font-bold py-4 rounded-xl">Envoyer</button>
                     </form>
                 </div>
-                
-                <div class="mt-12 lg:mt-0">
-                    <div class="bg-clinique-blue rounded-2xl p-8 lg:p-12 text-white h-full section-header">
-                        <h3 class="font-heading text-2xl font-bold mb-8">Nos Coordonnées</h3>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                                    <i class="fas fa-phone w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white/70 text-sm">Téléphone</p>
-                                    <p class="font-semibold">+243</p>
-                                </div>
+                <div class="bg-clinique-blue rounded-3xl p-8 text-white">
+                    <h3 class="font-heading text-2xl font-bold mb-8">Nos Coordonnées</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-phone"></i>
                             </div>
-                            
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                                    <i class="fas fa-envelope w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white/70 text-sm">Email</p>
-                                    <p class="font-semibold">lacliniquedelentrepreneuriat@gmail.com</p>
-                                </div>
+                            <div>
+                                <p class="text-white/70 text-sm">Téléphone</p>
+                                <p class="font-bold">+243</p>
                             </div>
-                            
-                            <div class="pt-6">
-                                <p class="text-white/70 text-sm mb-4">Suivez-nous</p>
-                                <div class="flex space-x-4">
-                                    <a href="#" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-clinique-orange transition-all duration-300">
-                                        <i class="fab fa-facebook-f w-5 h-5"></i>
-                                    </a>
-                                    <a href="#" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-clinique-orange transition-all duration-300">
-                                        <i class="fab fa-linkedin-in w-5 h-5"></i>
-                                    </a>
-                                    <a href="#" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-clinique-orange transition-all duration-300">
-                                        <i class="fab fa-instagram w-5 h-5"></i>
-                                    </a>
-                                    <a href="#" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-clinique-orange transition-all duration-300">
-                                        <i class="fab fa-twitter w-5 h-5"></i>
-                                    </a>
-                                </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-envelope"></i>
                             </div>
+                            <div>
+                                <p class="text-white/70 text-sm">Email</p>
+                                <p class="font-bold">lacliniquedelentrepreneuriat@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-white/70 text-sm">Adresse</p>
+                                <p class="font-bold">Kinshasa, RDC</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-white/20">
+                        <p class="text-white/70 mb-4">Suivez-nous</p>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-clinique-orange">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-clinique-orange">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-clinique-orange">
+                                <i class="fab fa-instagram"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -565,41 +604,27 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-clinique-blue text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="font-heading text-2xl font-bold mb-4">
-                    <i class="fas fa-rocket mr-2"></i>La Clinique de l'Entrepreneuriat
-                </h3>
-                <p class="text-white/80 mb-6">
-                    Former • Innover • Diriger • Créer des opportunités
-                </p>
-                <p class="text-white/60">© 2024 La Clinique de l'Entrepreneuriat. Tous droits réservés.</p>
-            </div>
+    <!-- FOOTER -->
+    <footer class="footer-gradient text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <img src="img/LOGO ENTREP AVEC FOND BLANC 01.png" alt="Logo" class="h-12 mx-auto mb-4" onerror="this.style.display='none'">
+            <p class="text-white/80 mb-2">La Clinique de l'Entrepreneuriat</p>
+            <p class="text-white/60 text-sm">© 2024 Tous droits réservés.</p>
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.section-header, .fade-in-up').forEach(el => {
-                observer.observe(el);
-            });
-        });
+        AOS.init({duration: 1000, once: true});
+        $(window).scroll(function() { if($(this).scrollTop() > 50) $('#main-header').addClass('shadow-lg'); else $('#main-header').removeClass('shadow-lg'); });
+        function animateCounter(el) {
+            var target = parseInt(el.attr('data-target')), current = 0, step = target/100;
+            var timer = setInterval(function() { current += step; if(current >= target) { el.text(target + '+'); clearInterval(timer); } else el.text(Math.floor(current) + '+'); }, 20);
+        }
+        $(window).scroll(function() { $('.stat-number').each(function() { if($(this).offset().top < $(window).height() - 100 && !$(this).hasClass('counted')) { $(this).addClass('counted'); animateCounter($(this)); } }); });
+        $('form').submit(function(e) { e.preventDefault(); alert('Message envoyé! Nous vous contacterons bientôt.'); });
     </script>
 </body>
 </html>
